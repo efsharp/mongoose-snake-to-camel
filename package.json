@@ -1,6 +1,6 @@
 {
 	"name": "mongoose-snake-to-camel",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"description": "Mongoose plugin that creates camelCase aliases for snake_case properties in Mongoose models",
 	"keywords": [ "mongoose", "snakecase", "camelcase", "snake", "camel", "mongodb", "mongo" ],
 	"files": [ "index.js" ],
