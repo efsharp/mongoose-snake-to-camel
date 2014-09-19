@@ -1,0 +1,19 @@
+{
+	"name": "mongoose-snake-to-camel",
+	"version": "0.0.1",
+	"description": "Mongoose plugin that creates camelCase aliases for snake_case properties in Mongoose models",
+	"keywords": [ "mongoose", "snakecase", "camelcase", "snake", "camel", "mongodb", "mongo" ],
+	"files": [ "index.js" ],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/tmont/mongoose-snake-to-camel.git"
+	},
+	"scripts": {
+		"test": "node_modules/.bin/mocha -R spec tests"
+	},
+	"devDependencies": {
+		"mongoose": "3.8.16",
+		"mocha": "1.21.4",
+		"expect.js": "0.3.1"
+	}
+}
