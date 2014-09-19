@@ -16,6 +16,7 @@ describe('Snake-to-camel', function() {
 			var schema = new Schema({
 				_hello: { type: Types.Mixed },
 				foo_bar: { type: Types.Mixed },
+				what__is___this: { type: Types.Mixed },
 				lolz: { type: Types.Mixed },
 				asdf: [ childSchema ]
 			});
@@ -27,13 +28,21 @@ describe('Snake-to-camel', function() {
 			Model = mongoose.Model.compile('FooBar', schema, 'foobar', connection);
 		});
 
-		it('should not create virtual properties for properties that begin with an underscore', function() {
+		it('should not create virtual properties for mongoose/mongo internals', function() {
 			var instance = new Model();
-			expect(instance).to.have.property('_hello');
-			expect(instance).to.not.have.property('hello');
+			expect(instance).to.have.property('_id');
+			expect(instance).to.have.property('__v');
+			expect(instance).to.not.have.property('v');
 		});
 
 		it('should create virtual properties for snake case properties', function() {
+			var instance = new Model();
+			instance.whatIsThis = 'bar';
+			expect(instance).to.have.property('what__is___this', 'bar');
+			expect(instance).to.have.property('whatIsThis', 'bar');
+		});
+
+		it('should create virtual properties for snake case properties with lots of consecutive underscores', function() {
 			var instance = new Model();
 			instance.fooBar = 'bar';
 			expect(instance).to.have.property('foo_bar', 'bar');
@@ -60,14 +69,21 @@ describe('Snake-to-camel', function() {
 			var instance = new Model();
 			instance.fooBar = 'asdf';
 			instance.asdf.push({ mehBoo: 'meh' });
+			instance.hello = 'world';
 
 			var clean = instance.toCleanObject();
 			expect(clean).to.have.property('fooBar', 'asdf');
 			expect(clean).to.not.have.property('foo_bar');
+			expect(clean).to.not.have.property('_hello');
+			expect(clean).to.have.property('hello', 'world');
 			expect(clean).to.have.property('asdf');
+			expect(clean).to.have.property('id');
+			expect(clean).to.not.have.property('_id');
 			expect(clean.asdf).to.have.length(1);
 			expect(clean.asdf[0]).to.not.have.property('meh_boo');
-			expect(clean.asdf[0]).to.have.property('mehBoo');
+			expect(clean.asdf[0]).to.have.property('mehBoo', 'meh');
+			expect(clean.asdf[0]).to.have.property('id');
+			expect(clean.asdf[0]).to.not.have.property('_id');
 		});
 
 		it('should create clean object with nulls', function() {
@@ -77,8 +93,6 @@ describe('Snake-to-camel', function() {
 			var clean = instance.toCleanObject();
 			expect(clean).to.have.property('lolz', null);
 		});
-
-
 	});
 
 	describe('with predefined virtual types', function() {
@@ -131,27 +145,6 @@ describe('Snake-to-camel', function() {
 			instance.fooBar = 'bar';
 			expect(instance).to.have.property('fooBar', 'bar');
 			expect(instance).to.have.property('foo_bar', 'bar');
-		});
-	});
-
-	describe('with ignorePrivate: false', function() {
-		var Model;
-
-		beforeEach(function() {
-			var schema = new Schema({
-				_hello: { type: Types.Mixed }
-			});
-
-			schema.plugin(snakeToCamelPlugin, { ignorePrivate: false });
-
-			var connection = mongoose.createConnection();
-			Model = mongoose.Model.compile('FooBar', schema, 'foobar', connection);
-		});
-
-		it('should create virtual properties for properties that begin with an underscore', function() {
-			var instance = new Model();
-			expect(instance).to.have.property('_hello');
-			expect(instance).to.have.property('hello');
 		});
 	});
 });

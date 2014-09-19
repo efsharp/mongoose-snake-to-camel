@@ -1,20 +1,19 @@
 function underscoreToCamelCase(string) {
-	if (string.charAt(0) === '_') {
-		string = string.substring(1);
-	}
-
-	//remove leading underscores
-	string = string.replace(/^_+/, '');
-
-	return string.replace(/_+([a-z])/g, function(_, char) {
-		return char.toUpperCase();
-	});
+	return string
+		.replace(/^_+/, '')
+		.replace(/_+([a-z])/g, function(_, char) {
+			return char.toUpperCase();
+		});
 }
 
-module.exports = function(schema, options) {
-	options = options || {};
-	if (!('ignorePrivate' in options)) {
-		options.ignorePrivate = true;
+module.exports = function(schema) {
+	var internals = {
+		__v: 1,
+		_bsontype: 1
+	};
+
+	function shouldIgnore(pathName) {
+		return !!internals[pathName];
 	}
 
 	schema.methods.toCleanObject = function() {
@@ -42,6 +41,10 @@ module.exports = function(schema, options) {
 					return;
 				}
 
+				if (shouldIgnore(key)) {
+					return;
+				}
+
 				var camelKey = underscoreToCamelCase(key);
 				if (key !== camelKey) {
 					obj[camelKey] = obj[key];
@@ -60,7 +63,7 @@ module.exports = function(schema, options) {
 	};
 
 	return schema.eachPath(function(pathName) {
-		if (pathName.charAt(0) === '_' && options.ignorePrivate) {
+		if (shouldIgnore(pathName)) {
 			return;
 		}
 
