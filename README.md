@@ -3,7 +3,8 @@
 [![NPM version](https://badge.fury.io/js/mongoose-snake-to-camel.png)](http://badge.fury.io/js/mongoose-snake-to-camel)
 
 A [Mongoose](http://mongoosejs.com/) plugin that creates camelCase aliases (virtuals) for
-snake_case properties.
+snake_case properties. This was inspired by/refactored from
+[mongoose-convention](https://github.com/vatson/mongoose-convention) by Vadim Tyokov.
 
 ## Installation
 ```

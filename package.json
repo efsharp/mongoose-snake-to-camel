@@ -4,6 +4,10 @@
 	"description": "Mongoose plugin that creates camelCase aliases for snake_case properties in Mongoose models",
 	"keywords": [ "mongoose", "snakecase", "camelcase", "snake", "camel", "mongodb", "mongo" ],
 	"files": [ "index.js" ],
+	"author": "Tommy Montgomery <tmont@tmont.com> (http://tmont.com)",
+	"contributors": [
+		"Vadim Tyokov <brainreflex@gmail.com>"
+	],
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/tmont/mongoose-snake-to-camel.git"
