@@ -86,6 +86,16 @@ describe('Snake-to-camel', function() {
 			expect(clean.asdf[0]).to.not.have.property('_id');
 		});
 
+		it('should create clean object without mongoose/mongo internal properties', function() {
+			var instance = new Model({ __v: 1 });
+
+			expect(instance).to.have.property('__v', 1);
+
+			var clean = instance.toCleanObject();
+			expect(clean).to.not.have.property('__v');
+			expect(clean).to.not.have.property('_bsontype');
+		});
+
 		it('should create clean object with nulls', function() {
 			var instance = new Model();
 			instance.lolz = null;

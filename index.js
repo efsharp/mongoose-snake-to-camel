@@ -13,7 +13,7 @@ module.exports = function(schema) {
 	};
 
 	function shouldIgnore(pathName) {
-		return !!internals[pathName];
+		return pathName in internals;
 	}
 
 	schema.methods.toCleanObject = function() {
@@ -42,6 +42,7 @@ module.exports = function(schema) {
 				}
 
 				if (shouldIgnore(key)) {
+					delete obj[key];
 					return;
 				}
 
