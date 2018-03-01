@@ -1,5 +1,5 @@
 # mongoose-snake-to-camel
-[![Build Status](https://api.travis-ci.org/efsharp/mongoose-snake-to-camel.png)](https://travis-ci.org/efsharp/mongoose-snake-to-camel)
+[![Build Status](https://api.travis-ci.org/fsharpco/mongoose-snake-to-camel.png)](https://travis-ci.org/efsharp/mongoose-snake-to-camel)
 [![NPM version](https://badge.fury.io/js/mongoose-snake-to-camel.png)](http://badge.fury.io/js/mongoose-snake-to-camel)
 
 A [Mongoose](http://mongoosejs.com/) plugin that creates camelCase aliases (virtuals) for
