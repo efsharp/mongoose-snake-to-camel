@@ -8,6 +8,7 @@
 	"contributors": [
 		"Vadim Tyokov <brainreflex@gmail.com>"
 	],
+	"license": "MIT",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/efsharp/mongoose-snake-to-camel.git"
